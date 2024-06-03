@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import useAuth from "../../hooks/useAuth";
 import SocialLogin from "../../components/socialLogin/SocialLogin";
+import Swal from "sweetalert2";
 
 
 const SignIn = () => {
@@ -27,6 +28,13 @@ const SignIn = () => {
         loginUser(email, password)
             .then((result) => {
                 console.log(result.user);
+                if(result.user){
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "login successfully!",
+                        icon: "success"
+                    });
+                }
                 navigate(from, { replace: true })
             })
             .catch(error => {
