@@ -1,10 +1,12 @@
 import useAuth from "../../../hooks/useAuth";
 import useDonationRequest from "../../../hooks/useDonationRequest";
 import { Link } from "react-router-dom";
+import useHandle from "../../../hooks/useHandle";
 
 const UserHome = () => {
   const { user } = useAuth();
-  const [donationRequest, refetch] = useDonationRequest();
+  const [donationRequest,] = useDonationRequest();
+  const [DonationRequestHandleDelete] = useHandle()
 
   return (
     <div className="space-y-10">
@@ -68,53 +70,59 @@ const UserHome = () => {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                        {donationRequest.slice(0, 3).map((data) => (
-                          <tr key={data._id}>
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                              {data.name}
-                            </td>
+                      {donationRequest.slice(0,3).map((data) => (
+                      <tr key={data._id}>
+                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                          {data.name}
+                        </td>
 
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <h1>{data.fullAddress}</h1>
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                              <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                {data.status}
-                              </p>
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                              {data.date}
-                            </td>
+                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          {data.fullAddress}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                            {data.status}
+                          </p>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {data.date}
+                        </td>
 
-                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                              {data.time}
-                            </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {data.time}
+                        </td>
 
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                              <div className="flex items-center justify-evenly gap-x-6">
-                                {data.status === "inprogress" && (
-                                  <>
-                                    <button className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                      Cancel
-                                    </button>
-                                    <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                      Done
-                                    </button>
-                                  </>
-                                )}
-                                <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                  Edit
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          <div className="flex items-center justify-evenly gap-x-6">
+                            {data.status === "inprogress" && (
+                              <>
+                                <button className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                  Cancel
                                 </button>
                                 <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                  View
+                                  Done
                                 </button>
-                                <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
+                              </>
+                            )}
+                            <Link
+                              to={`/dashboard/donation-requests-update/${data._id}`}
+                            >
+                              <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                Edit
+                              </button>
+                            </Link>
+                            <Link to={`/dashboard/donation-requests-details/${data._id}`}>
+                              <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                View
+                              </button>
+                            </Link>
+                            <button onClick={()=>DonationRequestHandleDelete(data._id)} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                       </tbody>
                     </table>
                   </div>

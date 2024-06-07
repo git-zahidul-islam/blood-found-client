@@ -75,7 +75,7 @@ const DonationRequestUpdate = () => {
 
   return (
     <div className="my-8 space-y-10">
-      <SectionHeading heading={"Donation Edit"}></SectionHeading>
+      <SectionHeading heading={"Donation Update"}></SectionHeading>
       <div className="">
         <form
           onSubmit={handleSubmit(handleUpdate)}

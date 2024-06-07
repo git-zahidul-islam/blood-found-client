@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useDonationRequest from "../../../hooks/useDonationRequest";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
+import useHandle from "../../../hooks/useHandle";
 
 const MyDonationRequest = () => {
-  const [donationRequest, refetch] = useDonationRequest();
+  const [donationRequest,] = useDonationRequest();
+  const [DonationRequestHandleDelete] = useHandle()
 
   return (
     <div className="space-y-10 mt-8">
@@ -93,15 +95,19 @@ const MyDonationRequest = () => {
                                 </button>
                               </>
                             )}
-                            <Link to={`/dashboard/donation-requests-update/${data._id}`}>
+                            <Link
+                              to={`/dashboard/donation-requests-update/${data._id}`}
+                            >
                               <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                 Edit
                               </button>
                             </Link>
-                            <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                              View
-                            </button>
-                            <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                            <Link to={`/dashboard/donation-requests-details/${data._id}`}>
+                              <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                View
+                              </button>
+                            </Link>
+                            <button onClick={()=>DonationRequestHandleDelete(data._id)} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                               Delete
                             </button>
                           </div>
