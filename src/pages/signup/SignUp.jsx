@@ -6,6 +6,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import sign_up_photo from '../../assets/Images/home-page/sign-up-page.jpg'
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react";
+import useOuterData from "../../hooks/useOuterData";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
@@ -15,25 +16,8 @@ const SignUp = () => {
     const { userCreate, userUpdateProfile, user, setUser } = useAuth()
     const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors }, } = useForm()
-    const [district, setDistrict] = useState([])
-    const [upazila, setUpazila] = useState([])
-
-    useEffect(() => {
-        axiosPublic.get('/district')
-            .then(res => {
-                setDistrict(res.data)
-            })
-    }, [axiosPublic])
-
-    useEffect(() => {
-        axiosPublic.get('/upazila')
-            .then(res => {
-                setUpazila(res.data)
-            })
-    }, [axiosPublic])
-
-
-
+    const [district,upazila] = useOuterData()
+    
     const handleSignUp = async (data) => {
         const name = data?.name
         const email = data?.email
@@ -72,9 +56,12 @@ const SignUp = () => {
                             const userInfo = {
                                 name: name,
                                 email: email,
+                                bloodGroup,
+                                upazila,
+                                district,
                                 role: 'donor',
                                 status: 'active'
-                            }
+                            }    
                             axiosPublic.post('/users', userInfo)
                                 .then(res => {
                                     if (res.data.insertedId) {
@@ -97,7 +84,7 @@ const SignUp = () => {
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
-                            text: "You have some mistake",
+                            text: "this email Already taken",
                         });
                     }
                 })
@@ -112,8 +99,6 @@ const SignUp = () => {
                 });
             }
         }
-
-
     }
 
     return (

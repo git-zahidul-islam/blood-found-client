@@ -54,7 +54,7 @@ const NavBer = () => {
                                 </div>
                             </summary>
                             <ul className="menu dropdown-content z-[1] bg-base-100 absolute -left-20 w-32">
-                                <li><Link to={'dashboard'}>dashboard</Link></li>
+                                <li><Link to={'dashboard/user-home'}>dashboard</Link></li>
                                 <li><button className="btn" onClick={handleLogout}>Logout</button></li>
                             </ul>
                         </details>

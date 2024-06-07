@@ -1,11 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 // import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useOuterData from "../../../hooks/useOuterData";
+import useSpecificUser from "../../../hooks/useSpecificUser";
 
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API;
@@ -17,30 +18,8 @@ const Profile = () => {
     const { user, } = useAuth()
     // const navigate = useNavigate()
     const { register, handleSubmit, reset } = useForm()
-    const [district, setDistrict] = useState([])
-    const [upazila, setUpazila] = useState([])
-
-    useEffect(() => {
-        axiosPublic.get('/district')
-            .then(res => {
-                setDistrict(res.data)
-            })
-    }, [axiosPublic])
-
-    useEffect(() => {
-        axiosPublic.get('/upazila')
-            .then(res => {
-                setUpazila(res.data)
-            })
-    }, [axiosPublic])
-
-    const { data: profileInfo = {},refetch } = useQuery({
-        queryKey: ['users', user?.email],
-        queryFn: async () => {
-            const res = await axiosPublic.get(`/users/${user?.email}`)
-            return res.data
-        }
-    })
+    const [district, upazila] = useOuterData()
+    const [userInfo, refetch] = useSpecificUser()
 
     const handleToggle = () => {
         setIsEdit(!isEdit)
@@ -100,7 +79,7 @@ const Profile = () => {
 
 
     return (
-        <div>
+        <div className="mt-8 space-y-10">
             <SectionHeading heading={'Profile'}></SectionHeading>
             {/* this is profile div */}
             <div>
@@ -108,7 +87,7 @@ const Profile = () => {
                     <div className="w-full h-40 bg-red-400">
                     </div>
                     <div className="flex justify-center">
-                        <img className="rounded-full absolute -bottom-10 border-2 p-1" src={user?.photoURL} alt="" />
+                        <img className="rounded-full absolute -bottom-10 border-2 p-1 h-28 w-28" src={user?.photoURL} alt="" />
                     </div>
                 </div>
                 <div className="w-full mt-16 space-y-5">
@@ -122,15 +101,15 @@ const Profile = () => {
                         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200">Name</label>
-                                <input disabled={isEdit == false} {...register("name")} defaultValue={profileInfo?.name} id="name" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input disabled={isEdit == false} {...register("name")} defaultValue={userInfo?.name} id="name" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
 
                             <div>
                                 <label htmlFor="select">Blood Select</label>
-                                <select disabled={isEdit == false} {...register("bloodGroup")} defaultValue={profileInfo?.bloodGroup} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                                <select disabled={isEdit == false} {...register("bloodGroup")} defaultValue={userInfo?.bloodGroup} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                                     {isEdit === false &&
                                         <option>
-                                            {profileInfo?.bloodGroup ? profileInfo?.bloodGroup : ' '}
+                                            {userInfo?.bloodGroup ? userInfo?.bloodGroup : ' '}
                                         </option>
                                     }
                                     {
@@ -150,14 +129,14 @@ const Profile = () => {
                             </div>
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200">Email</label>
-                                <input disabled defaultValue={profileInfo?.email} id="email" type="email" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input disabled defaultValue={userInfo?.email} id="email" type="email" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
                             <div>
                                 <label htmlFor="select">District</label>
-                                <select disabled={isEdit == false} {...register("district")} defaultValue={profileInfo?.district} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                                <select disabled={isEdit == false} {...register("district")} defaultValue={userInfo?.district} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                                     {isEdit === false &&
                                         <option>
-                                            {profileInfo?.district ? profileInfo?.district : ' '}
+                                            {userInfo?.district ? userInfo?.district : ' '}
                                         </option>
                                     }
                                     {isEdit === true &&
@@ -172,7 +151,7 @@ const Profile = () => {
                                 <select {...register("upazila")} disabled={isEdit == false} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                                     {isEdit === false &&
                                         <option>
-                                            {profileInfo?.upazila ? profileInfo?.upazila : ' '}
+                                            {userInfo?.upazila ? userInfo?.upazila : ' '}
                                         </option>
                                     }
                                     {isEdit === true &&
