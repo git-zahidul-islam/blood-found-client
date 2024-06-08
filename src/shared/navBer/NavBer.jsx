@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import logo from '../../assets/Images/home-page/logo.png'
+import useAdmin from "../../pages/dashboard/admin/useAdmin";
 
 
 const NavBer = () => {
     const { logout, user } = useAuth()
+    const [isAdmin] = useAdmin()
 
     const handleLogout = () => {
         logout()
@@ -54,11 +56,10 @@ const NavBer = () => {
                                 </div>
                             </summary>
                             <ul className="menu dropdown-content z-[1] bg-base-100 absolute -left-20 w-32">
-                                <li><Link to={'dashboard/user-home'}>dashboard</Link></li>
+                                <li><Link to={isAdmin ? 'dashboard/admin-home' : 'dashboard/user-home'}>dashboard</Link></li>
                                 <li><button className="btn" onClick={handleLogout}>Logout</button></li>
                             </ul>
                         </details>
-                        // <button onClick={handleLogout}>logout</button>
                         :
                         <button className="p-2 bg-gray-300 text-base font-semibold"><Link to={'sign-in'}>Login</Link></button>
                 }

@@ -12,6 +12,7 @@ import CreateDonation from "../pages/dashboard/createDonation/CreateDonation";
 import MyDonationRequest from "../pages/dashboard/myDonationRequest/MyDonationRequest";
 import DonationRequestUpdate from "../pages/dashboard/donationRequestDetails/DonationRequestUpdate";
 import DonationRequestDetails from "../pages/dashboard/donationRequestDetails/DonationRequestDetails";
+import AdminHome from "../pages/dashboard/admin/AdminHome";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,11 @@ export const router = createBrowserRouter([
             `${import.meta.env.VITE_API_COMMON}/donationDetails/${params.id}`
           ),
       },
+      // admin route
+      {
+        path: 'admin-home',
+        element: <AdminHome></AdminHome>
+      }
     ],
   },
 ]);
