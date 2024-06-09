@@ -1,9 +1,11 @@
 import Swal from "sweetalert2";
 import useAxiosPublic from "./useAxiosPublic";
 import useDonationRequest from "./useDonationRequest";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useHandle = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
   const [, refetch] = useDonationRequest();
 
   const DonationRequestHandleDelete = (id) => {
@@ -18,7 +20,7 @@ const useHandle = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         console.log(id);
-        const res = await axiosPublic.delete(`/donationDelete/${id}`);
+        const res = await axiosSecure.delete(`/donationDelete/${id}`);
         console.log(res.data);
         if (res.data.deletedCount > 0) {
           Swal.fire({
