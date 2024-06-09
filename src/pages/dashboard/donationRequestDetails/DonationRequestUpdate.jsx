@@ -7,11 +7,13 @@ import useSpecificUser from "../../../hooks/useSpecificUser";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import useAdmin from "../admin/useAdmin";
 
 const DonationRequestUpdate = () => {
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate()
   const loaderData = useLoaderData();
+  const [isAdmin] = useAdmin()
   console.log(loaderData);
   console.log(edit);
   const {
@@ -68,7 +70,7 @@ const DonationRequestUpdate = () => {
         text: "The Data Is Updated!",
         icon: "success",
       });
-      navigate('/dashboard/my-donation-requests')
+      navigate(isAdmin ? '/dashboard/all-blood-donation-request' : '/dashboard/my-donation-requests' )
     }
     setEdit(false);
   };
