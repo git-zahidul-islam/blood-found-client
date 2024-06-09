@@ -28,7 +28,7 @@ const useAxiosSecure = () => {
         console.log("the inter, err status code", status);
         if (status === 401 || status === 403) {
             await logout()
-            navigate('/login')
+            navigate('/')
         }
         return Promise.reject(error)
     })

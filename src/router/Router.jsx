@@ -13,6 +13,7 @@ import MyDonationRequest from "../pages/dashboard/myDonationRequest/MyDonationRe
 import DonationRequestUpdate from "../pages/dashboard/donationRequestDetails/DonationRequestUpdate";
 import DonationRequestDetails from "../pages/dashboard/donationRequestDetails/DonationRequestDetails";
 import AdminHome from "../pages/dashboard/admin/AdminHome";
+import AllUser from "../pages/dashboard/admin/AllUser";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
       {
         path: 'admin-home',
         element: <AdminHome></AdminHome>
+      },
+      {
+        path: 'all-users',
+        element: <AllUser></AllUser>
       }
     ],
   },

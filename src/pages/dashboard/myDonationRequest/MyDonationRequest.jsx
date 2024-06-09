@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useDonationRequest from "../../../hooks/useDonationRequest";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
 import useHandle from "../../../hooks/useHandle";
+import noDataImage from '../../../assets/Images/other/nodata.png'
 
 const MyDonationRequest = () => {
   const [donationRequest,] = useDonationRequest();
@@ -10,6 +11,8 @@ const MyDonationRequest = () => {
   return (
     <div className="space-y-10 mt-8">
       <SectionHeading heading={"My Donation Requests"}></SectionHeading>
+      {
+        donationRequest.length !== 0 ?
       <section className="container mx-auto">
         <div className="flex flex-col">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -121,6 +124,19 @@ const MyDonationRequest = () => {
           </div>
         </div>
       </section>
+        :
+        <div className="flex justify-center">
+          <div className="w-8/12">
+            <img
+              className="h-full w-full"
+              src={noDataImage}
+              alt="no data image"
+            />
+          </div>
+        </div>
+
+      }
+      
     </div>
   );
 };

@@ -7,12 +7,14 @@ import sign_up_photo from '../../assets/Images/home-page/sign-up-page.jpg'
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react";
 import useOuterData from "../../hooks/useOuterData";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
     const { userCreate, userUpdateProfile, user, setUser } = useAuth()
     const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors }, } = useForm()
@@ -60,9 +62,10 @@ const SignUp = () => {
                                 upazila,
                                 district,
                                 role: 'donor',
-                                status: 'active'
+                                status: 'active',
+                                photo
                             }    
-                            axiosPublic.post('/users', userInfo)
+                            axiosSecure.post('/users', userInfo)
                                 .then(res => {
                                     if (res.data.insertedId) {
                                         Swal.fire({
