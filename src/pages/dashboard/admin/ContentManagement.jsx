@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const ContentManagement = () => {
+  const { user } = useAuth();
   const [filter, setFilter] = useState(" ");
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -25,14 +28,43 @@ const ContentManagement = () => {
       console.log("after- if", after);
       const res = await axiosSecure.patch(`/blog/${id}`, { status: after });
       console.log(res.data);
-      refetch()
+      refetch();
     } else {
       console.log("current", current);
       console.log("after else", after);
       const res = await axiosSecure.patch(`/blog/${id}`, { status: after });
       console.log(res.data);
-      refetch()
+      refetch();
     }
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    console.log(user?.email);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        console.log(id);
+        const res = await axiosSecure.delete(`/blog/${id}`);
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your Donation Request has been deleted.",
+            icon: "success",
+          });
+          refetch();
+        }
+      }
+    });
   };
 
   return (
@@ -80,10 +112,13 @@ const ContentManagement = () => {
                   }
                   className="p-2 bg-slate-300 w-3/6 rounded-xl"
                 >
-                  {data.status !== 'published' ? 'Publish' : 'Unpublish' }
+                  {data.status !== "published" ? "Publish" : "Unpublish"}
                 </button>
-                <button className="p-2 bg-slate-300 w-3/6 rounded-xl">
-                  h2
+                <button
+                  onClick={() => handleDelete(data._id)}
+                  className="p-2 bg-slate-300 w-3/6 rounded-xl"
+                >
+                  Delete
                 </button>
               </div>
             </div>
