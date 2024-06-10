@@ -32,7 +32,7 @@ const NavBer = () => {
     const navLink = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/donation-request'}>Donation Requests</Link></li>
-        <li><Link to={'/'}>Blog</Link></li>
+        <li><Link to={'/blog'}>Blog</Link></li>
         <li><Link to={'/'}>Funding</Link></li>
         <li><Link to={'/other'}>Other</Link></li>
     </>

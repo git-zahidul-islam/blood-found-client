@@ -19,6 +19,8 @@ import ContentManagement from "../pages/dashboard/admin/ContentManagement";
 import AddBlog from "../pages/dashboard/admin/AddBlog";
 import DonationRequest from "../pages/donationRequest/DonationRequest";
 import AllDonationRequestDetails from "../pages/donationRequest/AllDonationRequestDetails";
+import Blog from "../pages/blog/Blog";
+import BlogDetails from "../pages/blog/BlogDetails";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,15 @@ export const router = createBrowserRouter([
       {
         path: "/sign-in",
         element: <SignIn></SignIn>,
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "/blog-details/:id",
+        element: <BlogDetails></BlogDetails>,
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_COMMON}/blogShow/${params.id}`)
       },
       {
         path: "/other",
