@@ -17,6 +17,8 @@ import AllUser from "../pages/dashboard/admin/AllUser";
 import AllBloodDonationRequest from "../pages/dashboard/admin/AllBloodDonationRequest";
 import ContentManagement from "../pages/dashboard/admin/ContentManagement";
 import AddBlog from "../pages/dashboard/admin/AddBlog";
+import DonationRequest from "../pages/donationRequest/DonationRequest";
+import AllDonationRequestDetails from "../pages/donationRequest/AllDonationRequestDetails";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,15 @@ export const router = createBrowserRouter([
             <Others></Others>
           </PrivateRoute>
         ),
+      },
+      {
+        path: '/donation-request',
+        element: <DonationRequest></DonationRequest>
+      },
+      {
+        path: '/donationDetails/:id',
+        element: <AllDonationRequestDetails></AllDonationRequestDetails>,
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_COMMON}/donationStatus/${params.id}`)
       },
     ],
   },

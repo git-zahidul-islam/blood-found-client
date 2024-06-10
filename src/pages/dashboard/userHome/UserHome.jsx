@@ -3,11 +3,49 @@ import useDonationRequest from "../../../hooks/useDonationRequest";
 import { Link } from "react-router-dom";
 import useHandle from "../../../hooks/useHandle";
 import doDataImage from "../../../assets/Images/other/nodata.png";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const UserHome = () => {
   const { user } = useAuth();
-  const [donationRequest] = useDonationRequest();
+  const [donationRequest,refetch] = useDonationRequest();
   const [DonationRequestHandleDelete] = useHandle();
+
+  const axiosPublic = useAxiosPublic()
+
+
+
+  console.log(donationRequest);
+
+  const handleDone = async(id,current,after)=>{
+    if(current == after) return console.log("the same status");
+    console.log(id,current,after);
+    const res = await axiosPublic.patch(`/donationDone/${id}`,{status: after})
+    console.log(res.data);
+    if(res.data.modifiedCount >0) {
+      Swal.fire({
+        title: "oh Great",
+        text: "thanks for done this",
+        icon: "success",
+      });
+      refetch()
+    }
+  }
+
+  const handleCanceled = async(id,current,after) => {
+    console.log(id,current,after);
+    const res = await axiosPublic.patch(`/donationCanceled/${id}`,{status: after})
+    console.log(res.data);
+    if(res.data.modifiedCount >0) {
+      Swal.fire({
+        title: "Oh Miss!",
+        text: "You Miss this Opportunity",
+        icon: "success",
+      });
+      refetch()
+    }
+
+  }
 
   return (
     <div className="space-y-10 w-full h-full">
@@ -63,6 +101,17 @@ const UserHome = () => {
                               Donation Time
                             </th>
 
+                            {
+                        donationRequest.map(data => data?.status == 'inprogress') &&
+                        <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                       {/* here is status inprogress system */}
+                       Donar Info
+                      </th>
+                      }
+
                             <th
                               scope="col"
                               className="px-4 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400"
@@ -94,17 +143,24 @@ const UserHome = () => {
                                 {data.time}
                               </td>
 
+                              <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <div>
+                            <p>{data?.bloodDonar?.name}</p>
+                            <p>{data?.bloodDonar?.email}</p>
+                          </div>
+                        </td>
+
                               <td className="px-4 py-4 text-sm whitespace-nowrap">
                                 <div className="flex items-center justify-evenly gap-x-6">
                                   {data.status === "inprogress" && (
                                     <>
-                                      <button className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                        Cancel
-                                      </button>
-                                      <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                        Done
-                                      </button>
-                                    </>
+                                    <button onClick={()=>handleDone(data._id,data?.status,"done")} className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                      Done
+                                    </button>
+                                    <button onClick={()=>handleCanceled(data._id,data?.status,"canceled")} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                    Cancel
+                                    </button>
+                                  </>
                                   )}
                                   <Link
                                     to={`/dashboard/donation-requests-update/${data._id}`}
