@@ -6,12 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
+import useVolunteer from "../volunteer/useVolunteer";
 
 const ContentManagement = () => {
   const { user } = useAuth();
   const [filter, setFilter] = useState(" ");
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
+  const [isVolunteer] = useVolunteer()
 
   const { data: blog = [], refetch } = useQuery({
     queryKey: ["blog", filter, axiosPublic],
@@ -101,7 +103,10 @@ const ContentManagement = () => {
                 </span>
               </div>
               <p className="flex-1">{data.description}</p>
-              <div className="w-3/12 bg-orange-200 flex gap-5 items-center justify-center px-2">
+             {
+              isVolunteer !== true &&
+              <>
+               <div className="w-3/12 bg-orange-200 flex gap-5 items-center justify-center px-2">
                 <button
                   onClick={() =>
                     handlePublish(
@@ -121,6 +126,8 @@ const ContentManagement = () => {
                   Delete
                 </button>
               </div>
+              </>
+             }
             </div>
           ))}
         </div>

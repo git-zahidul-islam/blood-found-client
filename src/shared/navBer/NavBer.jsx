@@ -1,18 +1,33 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import logo from '../../assets/Images/home-page/logo.png'
-import useAdmin from "../../pages/dashboard/admin/useAdmin";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+// import useVolunteer from "../../pages/dashboard/volunteer/useVolunteer";
 
 
 const NavBer = () => {
     const { logout, user } = useAuth()
-    const [isAdmin] = useAdmin()
+    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
+    // const [isVolunteer] = useVolunteer()
 
     const handleLogout = () => {
         logout()
             .then(() => console.log("successfully logout"))
             .catch(error => console.error(error))
     }
+
+    const {data: userRole = []} = useQuery({
+        queryKey: ['userRole',user?.email],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/usersRole/${user?.email}`)
+            return res.data
+        }
+    })
+
+    // console.log(userRole?.role);
 
     const navLink = <>
         <li><Link to={'/'}>Home</Link></li>
@@ -56,7 +71,8 @@ const NavBer = () => {
                                 </div>
                             </summary>
                             <ul className="menu dropdown-content z-[1] bg-base-100 absolute -left-20 w-32">
-                                <li><Link to={isAdmin ? 'dashboard/admin-home' : 'dashboard/user-home'}>dashboard</Link></li>
+                                <li><Link to={userRole?.role == 'admin' || userRole?.role == 'volunteer' ?
+                                     'dashboard/admin-home' : 'dashboard/user-home' }>dashboard</Link></li>
                                 <li><button className="btn" onClick={handleLogout}>Logout</button></li>
                             </ul>
                         </details>

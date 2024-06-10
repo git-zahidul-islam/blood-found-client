@@ -83,25 +83,30 @@ export const router = createBrowserRouter([
       },
       // admin route
       {
-        path: 'admin-home',
-        element: <AdminHome></AdminHome>
+        path: "admin-home",
+        element: <AdminHome></AdminHome>,
       },
       {
-        path: 'all-users',
-        element: <AllUser></AllUser>
+        path: "all-users",
+        element: <AllUser></AllUser>,
       },
       {
-        path: 'all-blood-donation-request',
-        element: <AllBloodDonationRequest></AllBloodDonationRequest>
+        path: "all-blood-donation-request",
+        element: <AllBloodDonationRequest></AllBloodDonationRequest>,
       },
       {
-        path: 'content-management',
-        element: <ContentManagement></ContentManagement>
+        path: "content-management",
+        element: <ContentManagement></ContentManagement>,
       },
       {
-        path: 'content-management/add-blog',
-        element: <AddBlog></AddBlog>
-      }
+        path: "content-management/add-blog",
+        element: <AddBlog></AddBlog>,
+      },
+      // voluntener
+      {
+        path: "volunteer-home",
+        element: <AdminHome></AdminHome>,
+      },
     ],
   },
 ]);

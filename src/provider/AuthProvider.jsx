@@ -8,7 +8,7 @@ import useAxiosPublic from '../hooks/useAxiosPublic'
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     const googleProvider = new GoogleAuthProvider();
     const axiosPublic = useAxiosPublic()
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
     }
     // logout
     const logout = () => {
-        setLoading(true)
+        // setLoading(true)
         return signOut(auth)
     }
     const userUpdateProfile = (name, photo) => {
@@ -61,6 +61,7 @@ const AuthProvider = ({ children }) => {
                 // TODO: remove token 
                 localStorage.removeItem('access-token')
                 setLoading(false)
+                setUser(null)
             }
 
             console.log("currentUser", currentUser);

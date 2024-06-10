@@ -25,6 +25,8 @@ const Profile = () => {
         setIsEdit(!isEdit)
     }
 
+    console.log(userInfo);
+
     const handleUpdate = async (data) => {
         const name = data?.name
         const bloodGroup = data?.bloodGroup

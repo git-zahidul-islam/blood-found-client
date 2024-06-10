@@ -3,13 +3,16 @@ import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import noDataImage from '../../../assets/Images/other/nodata.png'
 import { Link } from "react-router-dom";
+import useVolunteer from "../volunteer/useVolunteer";
 
 
 
 const AllBloodDonationRequest = () => {
     const axiosSecure = useAxiosSecure()
+    const [isVolunteer] = useVolunteer()
 
-    const {data: allRequest = []} = useQuery({
+
+    const {data: allRequest = [],refetch} = useQuery({
         queryKey: ['allRequest'],
         queryFn: async() =>{
             const res = await axiosSecure.get('donation')
@@ -17,6 +20,16 @@ const AllBloodDonationRequest = () => {
         }
     })
     console.log(allRequest);
+
+    const handleStatus =async(id,current,after)=>{
+      if(current == after) return console.log("the two dat is same");
+      console.log(id);      
+      console.log(current);      
+      console.log(after);
+      const res = await axiosSecure.patch(`volunteer-role/${id}`,{status: after})
+      console.log(res.data);
+      refetch()
+    }
 
     return (
         <div className="my-8 space-y-10">
@@ -98,7 +111,10 @@ const AllBloodDonationRequest = () => {
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center justify-evenly gap-x-6">
-                            {data.status === "inprogress" && (
+                            {
+                              isVolunteer !== true ?
+                              <>
+                              {data.status === "inprogress" && (
                               <>
                                 <button className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
                                   Cancel
@@ -123,9 +139,13 @@ const AllBloodDonationRequest = () => {
                             <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                 delete
                                 </button>
-                            {/* <button onClick={()=>DonationRequestHandleDelete(data._id)} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                              Delete
-                            </button> */}
+                              </>
+                              :
+                              <button 
+                              onClick={() => handleStatus(data._id, data?.status, 'inprogress')}
+                               className="bg-green-500/80 text-white p-1 rounded-md">Change Status
+                               </button>
+                            }
                           </div>
                         </td>
                       </tr>
