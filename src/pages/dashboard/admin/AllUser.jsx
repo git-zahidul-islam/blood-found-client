@@ -3,14 +3,16 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import dummyPhoto from "../../../assets/Images/other/dumyPhoto.png";
 import Swal from "sweetalert2";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
+import { useState } from "react";
 
 const AllUser = () => {
   const axiosSecure = useAxiosSecure();
+  const [filter, setFilter] = useState(" ");
 
   const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users",filter],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get(`/users?filter=${filter}`);
       return res.data;
     },
   });
@@ -143,7 +145,8 @@ const AllUser = () => {
     <div className="my-8 space-y-10">
       <SectionHeading heading={"All User"}></SectionHeading>
       <section className="container px-4 mx-auto">
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center justify-between">
+          <div className="flex gap-4">
           <h2 className="text-lg font-medium text-gray-800 dark:text-white">
             Team members
           </h2>
@@ -151,6 +154,18 @@ const AllUser = () => {
           <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
             {users.length < 10 ? 0 : ' '}{users.length} users
           </span>
+          </div>
+          <div className="flex gap-2 items-center">
+            <p>User filtering</p>
+            <select
+            onChange={(e) => setFilter(e.target.value)}
+            value={filter}
+             className="border-2 rounded-lg p-1" name="select" id="select">
+              <option value="">Reset</option>
+              <option value="active">Active</option>
+              <option value="block">Block</option>
+            </select>
+          </div>
         </div>
 
         <div className="flex flex-col mt-6">

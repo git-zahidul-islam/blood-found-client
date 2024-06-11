@@ -7,9 +7,10 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
 const MyDonationRequest = () => {
-  const [donationRequest,refetch] = useDonationRequest();
+  const [donationRequest,refetch,filter, setFilter] = useDonationRequest();
   const [DonationRequestHandleDelete] = useHandle()
   const axiosPublic = useAxiosPublic()
+  
 
 
 
@@ -49,6 +50,19 @@ const MyDonationRequest = () => {
   return (
     <div className="space-y-10 mt-8">
       <SectionHeading heading={"My Donation Requests"}></SectionHeading>
+      <div className="flex items-center gap-3">
+      <p>User filtering</p>
+            <select
+            onChange={(e) => setFilter(e.target.value)}
+            value={filter}
+             className="border-2 rounded-lg p-1" name="select" id="select">
+              <option value="">Reset</option>
+              <option value="pending">Pending</option>
+              <option value="inprogress">Inprogress</option>
+              <option value="canceled">Canceled</option>
+              <option value="done">Done</option>
+            </select>
+      </div>
       {
         donationRequest.length !== 0 ?
       <section className="container mx-auto">
@@ -123,7 +137,7 @@ const MyDonationRequest = () => {
                           {data.fullAddress}
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                          <p  className="text-xs font-normal text-gray-600 dark:text-gray-400">
                             {data.status}
                           </p>
                         </td>
