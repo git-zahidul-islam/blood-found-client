@@ -8,8 +8,10 @@ const ContactUs = () => {
                 <div className="container py-12 mx-auto">
                     <div className="lg:flex lg:items-center lg:-mx-6">
                         <div className="lg:w-1/2 lg:mx-6 lg:px-0 md:px-0 px-5">
-                            <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white lg:text-3xl">
-                                Contact us for <br/> more info
+                            <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white lg:text-3xl
+                            bg-gradient-to-r from-red-600 via-red-300 to-red-700 bg-clip-text text-transparent
+                            ">
+                                Contact us for more info
                             </h1>
 
                             <div className="mt-6 space-y-8 md:mt-8">
@@ -96,7 +98,7 @@ const ContactUs = () => {
                                         <textarea className="block w-full h-32 px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md md:h-48 dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Message"></textarea>
                                     </div>
 
-                                    <button className="w-full px-6 py-3 mt-6 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                    <button className="w-full px-6 py-3 mt-6 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#FBAAAA] rounded-md hover:bg-[#ee6666cc] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                                         get in touch
                                     </button>
                                 </form>

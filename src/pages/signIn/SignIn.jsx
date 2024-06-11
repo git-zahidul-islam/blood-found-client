@@ -4,6 +4,7 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import useAuth from "../../hooks/useAuth";
 import SocialLogin from "../../components/socialLogin/SocialLogin";
 import Swal from "sweetalert2";
+import img from '../../assets/Images/home-page/sign-up-page.jpg'
 
 
 const SignIn = () => {
@@ -55,9 +56,9 @@ const SignIn = () => {
 
 
     return (
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content flex-col lg:flex-row">
-                <div className="card md:w-1/2 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="hero min-h-screen ">
+            <div className="hero-content flex-col lg:flex-row gap-0">
+                <div className="card md:w-1/2 w-full max-w-sm">
                     <form onSubmit={handleLogin} className="card-body">
                         <div className="form-control">
                             <label className="label">
@@ -82,9 +83,9 @@ const SignIn = () => {
                         </div>
                         <div className="form-control mt-6">
                             {/* TODO: make disabled true */}
-                            <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
+                            <input disabled={false} className="bg-[#FBAAAA] p-2 text-white rounded-md " type="submit" value="Login" />
                         </div>
-                        <small>New here <Link className="text-base font-medium text-indigo-700" to={'/sign-up'}>Create an account</Link></small>
+                        <small>New here <Link className="text-base font-medium text-red-700/70" to={'/sign-up'}>Create an account</Link></small>
                     </form>
                     <div className="divider px-2"></div>
                     <div className="flex justify-center">
@@ -92,8 +93,7 @@ const SignIn = () => {
                     </div>
                 </div>
                 <div className="text-center w-1/2 lg:text-left">
-                    <input type="submit" className="text-5xl font-bold" value="login" />
-                    <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+                    <img className="h-[610px]" src={img} alt="" />
                 </div>
             </div>
         </div>

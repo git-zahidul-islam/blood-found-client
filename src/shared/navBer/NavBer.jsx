@@ -38,7 +38,8 @@ const NavBer = () => {
     </>
 
     return (
-        <div className="navbar z-10 bg-white bg-opacity-20 text-black container mx-auto px-0 py-3">
+       <div className="flex justify-center w-full bg-red-400/60">
+         <div className="navbar z-10 text-black container mx-auto px-0 py-3">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -55,32 +56,47 @@ const NavBer = () => {
                     </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
+                <ul className="menu menu-horizontal px-1 font-medium text-lg">
                     {navLink}
                 </ul>
             </div>
             <div className="navbar-end">
                 {
                     user ?
-                        <details className="dropdown relative">
-                            <summary className="">
-                                <div className="avatar">
-                                    <div className="w-10 rounded-full">
-                                        <img src={`${user?.photoURL}`} />
-                                    </div>
-                                </div>
-                            </summary>
-                            <ul className="menu dropdown-content z-[1] bg-base-100 absolute -left-20 w-32">
-                                <li><Link to={userRole?.role == 'admin' || userRole?.role == 'volunteer' ?
+                        // <details className="dropdown relative">
+                        //     <summary className="">
+                        //         <div className="avatar">
+                        //             <div className="w-10 rounded-full">
+                        //                 <img src={`${user?.photoURL}`} />
+                        //             </div>
+                        //         </div>
+                        //     </summary>
+                        //     <ul className="menu dropdown-content z-[1] bg-base-100 absolute -left-20 w-32">
+                        //         <li><Link to={userRole?.role == 'admin' || userRole?.role == 'volunteer' ?
+                        //              'dashboard/admin-home' : 'dashboard/user-home' }>dashboard</Link></li>
+                        //         <li><button className="btn" onClick={handleLogout}>Logout</button></li>
+                        //     </ul>
+                        // </details>
+
+                        <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                          <div className="w-10 rounded-full">
+                            <img alt="Tailwind CSS Navbar component" src={`${user?.photoURL}`} />
+                          </div>
+                        </div>
+                        <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-2">
+                            <li className="p-2 "><Link to={userRole?.role == 'admin' || userRole?.role == 'volunteer' ?
                                      'dashboard/admin-home' : 'dashboard/user-home' }>dashboard</Link></li>
-                                <li><button className="btn" onClick={handleLogout}>Logout</button></li>
-                            </ul>
-                        </details>
+                            <li><button className="p-2 bg-red-600/45" onClick={handleLogout}>Logout</button></li>
+                        </ul>
+                      </div>
+
                         :
-                        <button className="p-2 bg-gray-300 text-base font-semibold"><Link to={'sign-in'}>Login</Link></button>
+                        <button className="p-2 bg-[#EC4F47] rounded-2xl text-base font-semibold"><Link to={'sign-in'}>Login</Link></button>
                 }
             </div>
         </div>
+       </div>
     );
 };
 

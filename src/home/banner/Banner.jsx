@@ -12,12 +12,13 @@ const Banner = () => {
             backgroundSize: 'cover'
         }}
         >
-            <div className='absolute bg-black opacity-70 h-full w-full text-white flex justify-center items-center'>
+            <div className='absolute bg-gradient-to-r from-red-400/50 to-slate-200/45 h-full w-full text-white flex justify-center items-center'>
                 <div className='flex gap-5'>
-                    <button className='btn'>Join as a donor</button>
                     <Link to={'/dashboard/create-donation'}>
-                    <button className='btn'>Search Donors</button>
+                    <button className='bg-[#ef3b32d7] hover:bg-[#e6dcdbcb] text-black rounded px-4 py-3 md:text-lg
+                    '>Join as a donor</button>
                     </Link>
+                    <button className='bg-[#e6dcdb] hover:bg-[#ef3b32af] text-black rounded px-4 py-3 md:text-lg'>Search Donors</button>
                 </div>
             </div>
         </div>
