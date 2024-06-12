@@ -20,6 +20,7 @@ import DonationRequest from "../pages/donationRequest/DonationRequest";
 import AllDonationRequestDetails from "../pages/donationRequest/AllDonationRequestDetails";
 import Blog from "../pages/blog/Blog";
 import BlogDetails from "../pages/blog/BlogDetails";
+import SearchPage from "../pages/searchPage/Search";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog></Blog>,
+      },
+      {
+        path: "/searchPage",
+        element: <SearchPage></SearchPage>,
       },
       {
         path: "/blog-details/:id",

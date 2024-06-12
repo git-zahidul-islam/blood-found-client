@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import React from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const customStyles = {
   content: {
@@ -20,6 +21,7 @@ const AllDonationRequestDetails = () => {
   const loadingData = useLoaderData();
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate()
+  const {user} = useAuth()
   // modal
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
@@ -136,7 +138,7 @@ const AllDonationRequestDetails = () => {
                 <div>
                   <label htmlFor="name">Name</label>
                   <input
-                    defaultValue={loadingData?.name}
+                    defaultValue={user?.displayName}
                     disabled
                     className="block p-1 w-full border-2 rounded-md"
                     type="text"
@@ -147,7 +149,7 @@ const AllDonationRequestDetails = () => {
                 <div>
                   <label htmlFor="email">email</label>
                   <input
-                    defaultValue={loadingData?.email}
+                    defaultValue={user?.email}
                     disabled
                     className="block p-1 w-full border-2 rounded-md"
                     type="text"

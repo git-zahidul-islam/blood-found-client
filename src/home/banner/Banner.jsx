@@ -23,7 +23,9 @@ const Banner = () => {
                     '>Join as a donor</button>
                     </Link>
                     }
+                    <Link to={'/searchPage'}>
                     <button className='bg-[#e6dcdb] hover:bg-[#ef3b32af] text-black rounded px-4 py-3 md:text-lg'>Search Donors</button>
+                    </Link>
                 </div>
             </div>
         </div>
