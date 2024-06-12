@@ -3,29 +3,40 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import dummyPhoto from "../../../assets/Images/other/dumyPhoto.png";
 import Swal from "sweetalert2";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const AllUser = () => {
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const [filter, setFilter] = useState(" ");
-  const [itemsPerPage,setItemsPerPage] = useState(2)
-  const [count,setCount] = useState(0)
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [count, setCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data: users = [], refetch } = useQuery({
-    queryKey: ["users",filter],
+    queryKey: ["users", filter, itemsPerPage, currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users?filter=${filter}`);
-      setCount(res.data.length)
+      const res = await axiosSecure.get(
+        `/users?page=${currentPage}&size=${itemsPerPage}&filter=${filter}`
+      );
       return res.data;
     },
   });
-  console.log(count);
 
-  const handleBlock = async (id,currentStatus,afterStatus,role) => {
-    if(role == 'admin') return toast.error('You are admin')
+  useEffect(() => {
+    axiosPublic.get("/usersCount").then((res) => {
+      setCount(res.data.result);
+    });
+  }, [axiosPublic]);
 
-    if(currentStatus === 'active'){
+  console.log("hh", count);
+
+  const handleBlock = async (id, currentStatus, afterStatus, role) => {
+    if (role == "admin") return toast.error("You are admin");
+
+    if (currentStatus === "active") {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -33,23 +44,24 @@ const AllUser = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then(async(result) => {
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
         if (result.isConfirmed) {
-          const res = await axiosSecure.patch(`/users/admin/${id}`,{status: afterStatus})
+          const res = await axiosSecure.patch(`/users/admin/${id}`, {
+            status: afterStatus,
+          });
           // console.log(res.data);
-          if(res.data.modifiedCount > 0){
+          if (res.data.modifiedCount > 0) {
             Swal.fire({
               title: "oh Great!",
               text: "User Status Update!",
-              icon: "success"
-          });
-            refetch()
+              icon: "success",
+            });
+            refetch();
           }
         }
       });
-    }
-    else{
+    } else {
       // console.log("else",id, currentStatus);
       // console.log("after",afterStatus);
 
@@ -60,27 +72,29 @@ const AllUser = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then(async(result) => {
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
         if (result.isConfirmed) {
-          const res = await axiosSecure.patch(`/users/admin/${id}`,{status: afterStatus})
+          const res = await axiosSecure.patch(`/users/admin/${id}`, {
+            status: afterStatus,
+          });
           // console.log(res.data);
-          if(res.data.modifiedCount > 0){
+          if (res.data.modifiedCount > 0) {
             Swal.fire({
               title: "oh Great!",
               text: "User Status Update!",
-              icon: "success"
-          });
-            refetch()
+              icon: "success",
+            });
+            refetch();
           }
         }
       });
     }
   };
 
-  const handleVolunteer =async (id,currentRole,afterRole) =>{
-    if(currentRole == 'admin') return toast.error('you can not switch')
-    if(currentRole == afterRole) return toast.error('You already volunteer')
+  const handleVolunteer = async (id, currentRole, afterRole) => {
+    if (currentRole == "admin") return toast.error("you can not switch");
+    if (currentRole == afterRole) return toast.error("You already volunteer");
 
     Swal.fire({
       title: "Are you sure?",
@@ -89,25 +103,27 @@ const AllUser = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
-    }).then(async(result) => {
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
       if (result.isConfirmed) {
-      const res = await axiosSecure.patch(`/users_role/admin/${id}`,{role:afterRole})
-      // console.log(res.data);
-      if(res.data.modifiedCount >0){
-      Swal.fire({
-        title: "oh Great!",
-        text: "The User is volunteer!",
-        icon: "success"
-      });
-      refetch()
-      }
+        const res = await axiosSecure.patch(`/users_role/admin/${id}`, {
+          role: afterRole,
+        });
+        // console.log(res.data);
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            title: "oh Great!",
+            text: "The User is volunteer!",
+            icon: "success",
+          });
+          refetch();
+        }
       }
     });
-  }
+  };
 
-  const handleAdmin = async (id,currentRole,afterRole) =>{
-    if(currentRole == afterRole) return toast.error('you already admin')
+  const handleAdmin = async (id, currentRole, afterRole) => {
+    if (currentRole == afterRole) return toast.error("you already admin");
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -115,28 +131,37 @@ const AllUser = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
-    }).then(async(result) => {
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
       if (result.isConfirmed) {
         // console.log(id);
         // console.log(currentRole);
         // console.log(afterRole);
 
-        const res = await axiosSecure.patch(`/users_admin_role/admin/${id}`,{role: afterRole})
+        const res = await axiosSecure.patch(`/users_admin_role/admin/${id}`, {
+          role: afterRole,
+        });
         // console.log(res.data);
-        if(res.data.modifiedCount > 0){
+        if (res.data.modifiedCount > 0) {
           Swal.fire({
             title: "Deleted!",
             text: "the user is admin.",
-            icon: "success"
+            icon: "success",
           });
-          refetch()
+          refetch();
         }
       }
     });
-  }
+  };
 
-  const pages = [...Array(count / itemsPerPage).keys()].map(ele => ele + 1)
+  const numberOfPage = Math.ceil(count / itemsPerPage);
+  const pages = [...Array(numberOfPage).keys()].map((ele) => ele + 1);
+
+  const handleButton = (value) => {
+    console.log(value);
+    setCurrentPage(parseInt(value));
+    refetch();
+  };
 
   return (
     <div className="my-8 space-y-10">
@@ -144,20 +169,24 @@ const AllUser = () => {
       <section className="container px-4 mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex gap-4">
-          <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-            Team members
-          </h2>
+            <h2 className="text-lg font-medium text-gray-800 dark:text-white">
+              Team members
+            </h2>
 
-          <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
-            {users.length < 10 ? 0 : ' '}{users.length} users
-          </span>
+            <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+              {users.length < 10 ? 0 : " "}
+              {users.length} users
+            </span>
           </div>
           <div className="flex gap-2 items-center">
             <p>User filtering</p>
             <select
-            onChange={(e) => setFilter(e.target.value)}
-            value={filter}
-             className="border-2 rounded-lg p-1" name="select" id="select">
+              onChange={(e) => setFilter(e.target.value)}
+              value={filter}
+              className="border-2 rounded-lg p-1"
+              name="select"
+              id="select"
+            >
               <option value="">Reset</option>
               <option value="active">Active</option>
               <option value="block">Block</option>
@@ -321,17 +350,37 @@ const AllUser = () => {
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
                             <button
-                              onClick={() => handleBlock(data?._id, data.status, data.status !== 'active' ? 'active' : 'block', data.role)}
+                              onClick={() =>
+                                handleBlock(
+                                  data?._id,
+                                  data.status,
+                                  data.status !== "active" ? "active" : "block",
+                                  data.role
+                                )
+                              }
                               className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60"
                             >
-                             {
-                              data.status !== 'active' ? "unblock" : "block"
-                             }
+                              {data.status !== "active" ? "unblock" : "block"}
                             </button>
-                            <button onClick={()=>handleVolunteer(data._id,data.role,"volunteer")} className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60">
+                            <button
+                              onClick={() =>
+                                handleVolunteer(
+                                  data._id,
+                                  data.role,
+                                  "volunteer"
+                                )
+                              }
+                              className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60"
+                            >
                               Make Volunteer
                             </button>
-                            <button disabled={data.role == 'admin'} onClick={()=>handleAdmin(data._id,data.role,"admin")} className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60">
+                            <button
+                              disabled={data.role == "admin"}
+                              onClick={() =>
+                                handleAdmin(data._id, data.role, "admin")
+                              }
+                              className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60"
+                            >
                               Admin
                             </button>
                           </div>
@@ -348,7 +397,9 @@ const AllUser = () => {
         <div className="flex items-center justify-between mt-6">
           {/* previous */}
           <button
-            className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+            disabled={currentPage == 1}
+            onClick={() => handleButton(currentPage - 1)}
+            className="flex disabled:bg-red-700/25 items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -368,18 +419,24 @@ const AllUser = () => {
           </button>
 
           <div className="items-center hidden lg:flex gap-x-3">
-            {
-              pages.map((p) => <a key={p._id}
+            {pages.map((page) => (
+              <button
+                onClick={() => handleButton(page)}
+                key={page}
                 // href="#"
-                className="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60"
+                className={` 
+                  ${currentPage === page ? "bg-red-600/45" : ""}
+                   px-2 py-1 text-sm text-black rounded-md dark:bg-gray-800 bg-blue-100/60`}
               >
-                {p}
-              </a> )
-            } 
+                {page}
+              </button>
+            ))}
           </div>
           {/* after button */}
           <button
-            className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+            disabled={currentPage == numberOfPage}
+            onClick={() => handleButton(currentPage + 1)}
+            className={`flex disabled:bg-red-700/25 items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800`}
           >
             <span>Next</span>
             <svg

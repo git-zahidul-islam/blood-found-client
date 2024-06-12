@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 // import districts from '../../../public/districts.json';
 // import upazilas from '../../../public/upazilas.json';
 import useOuterData from "../../hooks/useOuterData";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 const Search = () => {
     const [district, upazila,] = useOuterData()
-
+    const axiosPublic = useAxiosPublic()
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [upazilasForDistrict, setUpazilasForDistrict] = useState([]);
     const [donors, setDonors] = useState([]);
@@ -26,27 +27,46 @@ const Search = () => {
         }
     }, [selectedDistrict, upazila]);
 
-
+// this is not working
     const onSubmit = (data) => {
-        const selectedDistrictName = district.find(dis => dis.id === selectedDistrict)?.name || "";
+        const {selectedDistrictName} = district.find(dis => dis.id === selectedDistrict)?.name || "";
+
+        const upazila = data.upazila;
+        // const district = data.district;
+        const bloodGroup = data.bloodGroup;
+
         const searchData = {
-            ...data,
-            district: selectedDistrictName,
-        };
-        console.log("Search Form Data:", searchData);
-        fetch(`${import.meta.env.VITE_API_URL}/search`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(searchData)
+            upazila,selectedDistrictName,bloodGroup
+        }
+
+        // const searchData = {
+        //     ...data,
+        //     district: selectedDistrictName,
+        // };
+        // console.log("Search Form Data:", searchData);
+
+        axiosPublic.get('/search',{searchData})
+        .then(res => {
+            console.log(res.data);
+            setDonors(res.data)
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Search Response Data:", data);
-            setDonors(data);
+        .then(err => {
+            console.log(err);
         })
-        .catch(error => console.log(error));
+
+        // fetch(`${import.meta.env.VITE_API_COMMON}/search`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(searchData)
+        // })
+        // .then(res => res.json())
+        // .then(data => {
+        //     console.log("Search Response Data:", data);
+        //     setDonors(data);
+        // })
+        // .catch(error => console.log(error));
     };
 
 

@@ -18,9 +18,9 @@ const BlogDetails = () => {
             <div className="space-y-3 lg:w-2/12 md:w-2/12 w-full bg-gray-400/30 p-4 px-2">
                 <h1 className="text-base font-medium">Recent Blog Publish</h1>
                 <div className="space-y-2">
-                    <p>nfwfg link 1</p>
-                    <p>nfwfg link 1</p>
-                    <p>nfwfg link 1</p>
+                    <p>link number 1</p>
+                    <p>link number 1</p>
+                    <p>link number 1</p>
                 </div>
             </div>
         </div>
