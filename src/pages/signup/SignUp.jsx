@@ -15,6 +15,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 const SignUp = () => {
     const axiosPublic = useAxiosPublic()
     const axiosSecure = useAxiosSecure()
+    const {logout} = useAuth()
     const { userCreate, userUpdateProfile, user, setUser } = useAuth()
     const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors }, } = useForm()
@@ -69,8 +70,8 @@ const SignUp = () => {
                                 .then(res => {
                                     if (res.data.insertedId) {
                                         Swal.fire({
-                                            title: "Good job!",
-                                            text: "login successfully!",
+                                            title: "Account create Done!",
+                                            text: "Login use your email address!",
                                             icon: "success"
                                         });
                                     }
@@ -79,7 +80,11 @@ const SignUp = () => {
                             reset()
                         })
                         .catch(error => console.error(error))
-                    navigate('/')
+                        logout()
+                        .then(res => {
+                            console.log("logout",res);
+                            navigate('/sign-in')
+                        })
                 })
                 .catch(error => {
                     console.error("the error message is", error);

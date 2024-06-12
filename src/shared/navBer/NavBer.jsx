@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import logo from '../../assets/Images/home-page/logo.png'
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +12,7 @@ const NavBer = () => {
     const axiosPublic = useAxiosPublic()
     const axiosSecure = useAxiosSecure()
     // const [isVolunteer] = useVolunteer()
+    const location = useLocation()
 
     const handleLogout = () => {
         logout()
@@ -34,7 +35,6 @@ const NavBer = () => {
         <li><Link to={'/donation-request'}>Donation Requests</Link></li>
         <li><Link to={'/blog'}>Blog</Link></li>
         <li><Link to={'/'}>Funding</Link></li>
-        <li><Link to={'/other'}>Other</Link></li>
     </>
 
     return (
@@ -62,7 +62,7 @@ const NavBer = () => {
             </div>
             <div className="navbar-end">
                 {
-                    user ?
+                    user && location.pathname !== '/sign-in' ?
                         // <details className="dropdown relative">
                         //     <summary className="">
                         //         <div className="avatar">

@@ -3,7 +3,6 @@ import Root from "../Root/Root";
 import Home from "../home/home/Home";
 import SignIn from "../pages/signIn/SignIn";
 import SignUp from "../pages/signup/SignUp";
-import Others from "../components/others/Others";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../pages/dashboard/dashboard/Dashboard";
 import Profile from "../pages/dashboard/profile/Profile";
@@ -47,14 +46,6 @@ export const router = createBrowserRouter([
         path: "/blog-details/:id",
         element: <BlogDetails></BlogDetails>,
         loader: ({params}) => fetch(`${import.meta.env.VITE_API_COMMON}/blogShow/${params.id}`)
-      },
-      {
-        path: "/other",
-        element: (
-          <PrivateRoute>
-            <Others></Others>
-          </PrivateRoute>
-        ),
       },
       {
         path: '/donation-request',

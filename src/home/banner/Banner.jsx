@@ -18,7 +18,7 @@ const Banner = () => {
                 <div className='flex gap-5'>
                     {
                         !user && 
-                        <Link to={'/'}>
+                        <Link to={'/sign-up'}>
                     <button className='bg-[#ef3b32d7] hover:bg-[#e6dcdbcb] text-black rounded px-4 py-3 md:text-lg
                     '>Join as a donor</button>
                     </Link>

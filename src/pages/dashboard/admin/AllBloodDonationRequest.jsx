@@ -15,7 +15,7 @@ const AllBloodDonationRequest = () => {
     const {data: allRequest = [],refetch} = useQuery({
         queryKey: ['allRequest'],
         queryFn: async() =>{
-            const res = await axiosSecure.get('donation')
+            const res = await axiosSecure.get('/donation')
             return res.data;
         }
     })
