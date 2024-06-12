@@ -13,8 +13,6 @@ const HomeStats = () => {
         }
     })
 
-    console.log(total);
-
     return (
         <div>
             <section className="px-6 py-12 my-6 bg-gradient-to-r from-stone-200 to-red-400 text-gray-800">
@@ -39,20 +37,20 @@ const HomeStats = () => {
 		</div>
 		<div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-50 text-gray-800">
         <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-gradient-to-bl from-red-500 via-red-300 to-red-50 h-20 w-20">
-				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=64519&format=png&color=000000' alt="" />
+				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=WCbYEPdsMFtZ&format=png&color=000000' alt="" />
 			</div>
 			<div className="flex flex-col justify-center align-middle">
-				<p className="text-3xl font-semibold leading-none">{total.upazile}</p>
-				<p className="capitalize">Upazile</p>
+				<p className="text-3xl font-semibold leading-none">{total.pending}</p>
+				<p className="capitalize">Pending</p>
 			</div>
 		</div>
 		<div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-50 text-gray-800">
         <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-gradient-to-bl from-red-500 via-red-300 to-red-50 h-20 w-20">
-				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=116710&format=png&color=000000' alt="" />
+				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=103813&format=png&color=000000' alt="" />
 			</div>
 			<div className="flex flex-col justify-center align-middle">
-				<p className="text-3xl font-semibold leading-none">{total.district}</p>
-				<p className="capitalize">District</p>
+				<p className="text-3xl font-semibold leading-none">{total.done}</p>
+				<p className="capitalize">Done</p>
 			</div>
 		</div>
 	</div>
