@@ -46,9 +46,9 @@ const CreateDonation = () => {
       fullAddress,
       status,
     };
-    console.log(requestData);
+    // console.log(requestData);
     const res = await axiosPublic.post("/donation", requestData);
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.insertedId) {
       Swal.fire({
         title: "Good job!",

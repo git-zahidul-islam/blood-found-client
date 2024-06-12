@@ -15,7 +15,7 @@ const SocialLogin = () => {
 
         googleLogin()
             .then(result => {
-                console.log("google login successfully", result.user);
+                // console.log("google login successfully", result.user);
                 const userInfo = {
                     email: result.user?.email,
                     name: result.user?.displayName,
@@ -24,7 +24,7 @@ const SocialLogin = () => {
                 }
                 axiosPublic.post('/users', userInfo)
                     .then(res => {
-                        console.log("user added by google", res.data);
+                        // console.log("user added by google", res.data);
                         if (res.data.insertedId) {
                             Swal.fire({
                                 title: "Good job!",

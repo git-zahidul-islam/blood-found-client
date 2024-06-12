@@ -42,13 +42,13 @@ const AllDonationRequestDetails = () => {
       },
       status: "inprogress",
     };
-    console.log(postData);
+    // console.log(postData);
 
     const res = await axiosPublic.patch(
       `/donated/${loadingData?._id}`,
       postData
     );
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.modifiedCount > 0) {
       Swal.fire({
         title: "Thanks For help!",

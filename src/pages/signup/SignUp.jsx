@@ -46,15 +46,15 @@ const SignUp = () => {
             })
             // console.log("imag", res.data?.data.display_url);
             const photo = res.data?.data.display_url
-            console.log(name, email, password, photo, ConfirmPassword, bloodGroup, district, upazila);
+            // console.log(name, email, password, photo, ConfirmPassword, bloodGroup, district, upazila);
 
             // TODO: enable this
             userCreate(email, password)
-                .then(result => {
-                    console.log(result.user);
+                .then(() => {
+                    // console.log(result.user);
                     userUpdateProfile(name, photo)
                         .then(() => {
-                            console.log("photo update");
+                            // console.log("photo update");
                             setUser({ ...user, photoURL: photo, displayName: name })
                             const userInfo = {
                                 name: name,
@@ -81,8 +81,8 @@ const SignUp = () => {
                         })
                         .catch(error => console.error(error))
                         logout()
-                        .then(res => {
-                            console.log("logout",res);
+                        .then(() => {
+                            // console.log("logout",res);
                             navigate('/sign-in')
                         })
                 })
@@ -98,7 +98,7 @@ const SignUp = () => {
                 })
         }
         catch (error) {
-            console.log("the err.. is:", error);
+            // console.log("the err.. is:", error);
             if (error) {
                 Swal.fire({
                     icon: "error",

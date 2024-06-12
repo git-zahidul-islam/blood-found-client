@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -38,13 +39,9 @@ const AddBlog = () => {
       status: "draft",
     };
     const res = await axiosPublic.post("/blog", postData);
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data) {
-      Swal.fire({
-        title: "Good job!",
-        text: "Article Post Successfully",
-        icon: "success",
-      });
+      toast.success('Article Post Successfully')
       reset();
     }
   };

@@ -7,6 +7,8 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useVolunteer from "../volunteer/useVolunteer";
+import { toast } from "react-toastify";
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 const ContentManagement = () => {
   const { user } = useAuth();
@@ -22,27 +24,31 @@ const ContentManagement = () => {
       return res.data;
     },
   });
-  console.log(blog);
 
   const handlePublish = async (id, current, after) => {
     if (current == "draft") {
-      console.log("current", current);
-      console.log("after- if", after);
+      // console.log("current", current);
+      // console.log("after- if", after);
       const res = await axiosSecure.patch(`/blog/${id}`, { status: after });
-      console.log(res.data);
+      if(res.data){
+        toast.success('the blog is Published')
+      }
       refetch();
     } else {
-      console.log("current", current);
-      console.log("after else", after);
+      // console.log("current", current);
+      // console.log("after else", after);
       const res = await axiosSecure.patch(`/blog/${id}`, { status: after });
-      console.log(res.data);
+      // console.log(res.data);
+      if(res.data){
+        toast.success('the blog is drafted')
+      }
       refetch();
     }
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
-    console.log(user?.email);
+    // console.log(id);
+    // console.log(user?.email);
 
     Swal.fire({
       title: "Are you sure?",
@@ -54,9 +60,9 @@ const ContentManagement = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log(id);
+        // console.log(id);
         const res = await axiosSecure.delete(`/blog/${id}`);
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.deletedCount > 0) {
           Swal.fire({
             title: "Deleted!",
@@ -117,12 +123,13 @@ const ContentManagement = () => {
                   }
                   className="p-2 bg-slate-300 w-3/6 rounded-xl"
                 >
-                  {data.status !== "published" ? "Publish" : "Unpublish"}
+                  {data.status !== "$published" ? "Publish" : "Unpublish"}
                 </button>
                 <button
                   onClick={() => handleDelete(data._id)}
-                  className="p-2 bg-slate-300 w-3/6 rounded-xl"
+                  className="p-2 bg-red-800/20 w-3/6 rounded-xl flex items-center justify-evenly text-red-600 text-base"
                 >
+                  <MdOutlineDeleteForever size={25}/>
                   Delete
                 </button>
               </div>

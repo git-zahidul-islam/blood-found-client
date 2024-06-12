@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router-dom";
 
 const BlogDetails = () => {
     const loaderData = useLoaderData()
-    console.log(loaderData);
+    // console.log(loaderData);
     return (
         <div className="max-w-7xl mx-auto my-8">
 <div className="flex gap-5 lg:flex-row md:flex-row flex-col">

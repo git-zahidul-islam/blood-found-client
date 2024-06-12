@@ -2,21 +2,22 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import logo from '../../assets/Images/home-page/logo.png'
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { toast } from "react-toastify";
 // import useVolunteer from "../../pages/dashboard/volunteer/useVolunteer";
 
 
 const NavBer = () => {
     const { logout, user } = useAuth()
     const axiosPublic = useAxiosPublic()
-    const axiosSecure = useAxiosSecure()
+    // const axiosSecure = useAxiosSecure()
     // const [isVolunteer] = useVolunteer()
     const location = useLocation()
 
     const handleLogout = () => {
         logout()
-            .then(() => console.log("successfully logout"))
+            .then(() => toast.success('successfully logout'))
             .catch(error => console.error(error))
     }
 

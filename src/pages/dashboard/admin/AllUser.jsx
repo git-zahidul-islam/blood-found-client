@@ -4,6 +4,7 @@ import dummyPhoto from "../../../assets/Images/other/dumyPhoto.png";
 import Swal from "sweetalert2";
 import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const AllUser = () => {
   const axiosSecure = useAxiosSecure();
@@ -19,12 +20,9 @@ const AllUser = () => {
   // console.log(users);
 
   const handleBlock = async (id,currentStatus,afterStatus,role) => {
-    if(role == 'admin') return console.log("you are admin, not permit block");
+    if(role == 'admin') return toast.error('You are admin')
 
     if(currentStatus === 'active'){
-      console.log(id,currentStatus);
-      console.log("after",afterStatus);
-
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -36,7 +34,7 @@ const AllUser = () => {
       }).then(async(result) => {
         if (result.isConfirmed) {
           const res = await axiosSecure.patch(`/users/admin/${id}`,{status: afterStatus})
-          console.log(res.data);
+          // console.log(res.data);
           if(res.data.modifiedCount > 0){
             Swal.fire({
               title: "oh Great!",
@@ -49,8 +47,8 @@ const AllUser = () => {
       });
     }
     else{
-      console.log("else",id, currentStatus);
-      console.log("after",afterStatus);
+      // console.log("else",id, currentStatus);
+      // console.log("after",afterStatus);
 
       Swal.fire({
         title: "Are you sure?",
@@ -63,7 +61,7 @@ const AllUser = () => {
       }).then(async(result) => {
         if (result.isConfirmed) {
           const res = await axiosSecure.patch(`/users/admin/${id}`,{status: afterStatus})
-          console.log(res.data);
+          // console.log(res.data);
           if(res.data.modifiedCount > 0){
             Swal.fire({
               title: "oh Great!",
@@ -78,8 +76,8 @@ const AllUser = () => {
   };
 
   const handleVolunteer =async (id,currentRole,afterRole) =>{
-    if(currentRole == 'admin') return console.log("you are , you can not switch");
-    if(currentRole == afterRole) return console.log("user already volunteer");
+    if(currentRole == 'admin') return toast.error('you can not switch')
+    if(currentRole == afterRole) return toast.error('You already volunteer')
 
     Swal.fire({
       title: "Are you sure?",
@@ -92,7 +90,7 @@ const AllUser = () => {
     }).then(async(result) => {
       if (result.isConfirmed) {
       const res = await axiosSecure.patch(`/users_role/admin/${id}`,{role:afterRole})
-      console.log(res.data);
+      // console.log(res.data);
       if(res.data.modifiedCount >0){
       Swal.fire({
         title: "oh Great!",
@@ -106,7 +104,7 @@ const AllUser = () => {
   }
 
   const handleAdmin = async (id,currentRole,afterRole) =>{
-    if(currentRole == afterRole) return console.log("you already admin");
+    if(currentRole == afterRole) return toast.error('you already admin')
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -117,12 +115,12 @@ const AllUser = () => {
       confirmButtonText: "Yes, delete it!"
     }).then(async(result) => {
       if (result.isConfirmed) {
-        console.log(id);
-        console.log(currentRole);
-        console.log(afterRole);
+        // console.log(id);
+        // console.log(currentRole);
+        // console.log(afterRole);
 
         const res = await axiosSecure.patch(`/users_admin_role/admin/${id}`,{role: afterRole})
-        console.log(res.data);
+        // console.log(res.data);
         if(res.data.modifiedCount > 0){
           Swal.fire({
             title: "Deleted!",

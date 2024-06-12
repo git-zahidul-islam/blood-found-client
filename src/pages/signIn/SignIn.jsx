@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import SocialLogin from "../../components/socialLogin/SocialLogin";
 import Swal from "sweetalert2";
 import img from '../../assets/Images/home-page/sign-up-page.jpg'
+import { toast } from "react-toastify";
 
 
 const SignIn = () => {
@@ -25,10 +26,10 @@ const SignIn = () => {
         const email = form.email.value;
         const password = form.password.value;
         const userInfo = { email, password }
-        console.log(userInfo);
+        // console.log(userInfo);
         loginUser(email, password)
             .then((result) => {
-                console.log(result.user);
+                // console.log(result.user);
                 if(result.user){
                     Swal.fire({
                         title: "Good job!",
@@ -40,7 +41,7 @@ const SignIn = () => {
             })
             .catch(error => {
                 const errorMessage = error.message;
-                console.log(errorMessage);
+                toast.error(errorMessage)
             })
     }
 

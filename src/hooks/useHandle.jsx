@@ -19,9 +19,9 @@ const useHandle = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log(id);
+        // console.log(id);
         const res = await axiosSecure.delete(`/donationDelete/${id}`);
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.deletedCount > 0) {
           Swal.fire({
             title: "Deleted!",

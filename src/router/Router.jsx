@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/blog-details/:id",
-        element: <BlogDetails></BlogDetails>,
+        element: <PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>,
         loader: ({params}) => fetch(`${import.meta.env.VITE_API_COMMON}/blogShow/${params.id}`)
       },
       {

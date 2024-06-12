@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import noDataImage from '../../../assets/Images/other/nodata.png'
 import { Link } from "react-router-dom";
 import useVolunteer from "../volunteer/useVolunteer";
+import { toast } from "react-toastify";
 
 
 
@@ -19,15 +20,18 @@ const AllBloodDonationRequest = () => {
             return res.data;
         }
     })
-    console.log(allRequest);
+    // console.log(allRequest);
 
     const handleStatus =async(id,current,after)=>{
-      if(current == after) return console.log("the two dat is same");
-      console.log(id);      
-      console.log(current);      
-      console.log(after);
+      if(current == after) return toast.error('action not permit')
+      // console.log(id);      
+      // console.log(current);      
+      // console.log(after);
       const res = await axiosSecure.patch(`volunteer-role/${id}`,{status: after})
-      console.log(res.data);
+      // console.log(res.data);
+      if(res.data){
+        toast.success('status Change')
+      }
       refetch()
     }
 

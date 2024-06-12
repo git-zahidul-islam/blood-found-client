@@ -19,7 +19,7 @@ const AdminHome = () => {
     }
   })
 
-  console.log(stats);
+  // console.log(stats);
 
   return (
     <div className="my-8 space-y-10">

@@ -14,8 +14,8 @@ const DonationRequestUpdate = () => {
   const navigate = useNavigate()
   const loaderData = useLoaderData();
   const [isAdmin] = useAdmin()
-  console.log(loaderData);
-  console.log(edit);
+  // console.log(loaderData);
+  // console.log(edit);
   const {
     recipientName,
     recipientUpazila,
@@ -61,9 +61,9 @@ const DonationRequestUpdate = () => {
       fullAddress,
       status,
     };
-    console.log(requestData);
+    // console.log(requestData);
     const res = await axiosPublic.patch(`/donationDetails/${_id}`, requestData);
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.modifiedCount > 0) {
       Swal.fire({
         title: "Oh Great!",

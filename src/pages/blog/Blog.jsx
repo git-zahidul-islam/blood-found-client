@@ -13,7 +13,7 @@ const Blog = () => {
     },
   });
 
-  console.log(blog);
+  // console.log(blog);
 
   return (
     <div className="max-w-7xl mx-auto my-8 min-h-[60vh]">

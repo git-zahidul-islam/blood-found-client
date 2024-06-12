@@ -25,7 +25,7 @@ const Profile = () => {
         setIsEdit(!isEdit)
     }
 
-    console.log(userInfo);
+    // console.log(userInfo);
 
     const handleUpdate = async (data) => {
         const name = data?.name
@@ -63,10 +63,10 @@ const Profile = () => {
             upazila,
             photo
         }
-        console.log(updateData);
+        // console.log(updateData);
 
         const res = await axiosPublic.patch(`/users/${user?.email}`, updateData)
-        console.log("updated data", res.data);
+        // console.log("updated data", res.data);
         if (res.data.modifiedCount > 0) {
             Swal.fire({
                 title: "Good job!",

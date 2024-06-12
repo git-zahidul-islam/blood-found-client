@@ -5,6 +5,7 @@ import useHandle from "../../../hooks/useHandle";
 import doDataImage from "../../../assets/Images/other/nodata.png";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const UserHome = () => {
   const { user } = useAuth();
@@ -15,13 +16,13 @@ const UserHome = () => {
 
 
 
-  console.log(donationRequest);
+  // console.log(donationRequest);
 
   const handleDone = async(id,current,after)=>{
-    if(current == after) return console.log("the same status");
-    console.log(id,current,after);
+    if(current == after) return toast.error('Action not permit')
+    // console.log(id,current,after);
     const res = await axiosPublic.patch(`/donationDone/${id}`,{status: after})
-    console.log(res.data);
+    // console.log(res.data);
     if(res.data.modifiedCount >0) {
       Swal.fire({
         title: "oh Great",
@@ -33,9 +34,9 @@ const UserHome = () => {
   }
 
   const handleCanceled = async(id,current,after) => {
-    console.log(id,current,after);
+    // console.log(id,current,after);
     const res = await axiosPublic.patch(`/donationCanceled/${id}`,{status: after})
-    console.log(res.data);
+    // console.log(res.data);
     if(res.data.modifiedCount >0) {
       Swal.fire({
         title: "Oh Miss!",

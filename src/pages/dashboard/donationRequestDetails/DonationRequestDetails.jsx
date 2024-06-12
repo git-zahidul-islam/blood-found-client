@@ -4,7 +4,7 @@ import SectionHeading from "../../../shared/sectionHeading/SectionHeading";
 
 const DonationRequestDetails = () => {
     const loaderData = useLoaderData()
-    console.log(loaderData);
+    // console.log(loaderData);
     const {
         recipientName,
         recipientUpazila,
