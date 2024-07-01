@@ -84,7 +84,7 @@ const SignIn = () => {
                         </div>
                         <div className="form-control mt-6">
                             {/* TODO: make disabled true */}
-                            <input disabled={false} className="bg-[#FBAAAA] p-2 text-white rounded-md " type="submit" value="Login" />
+                            <input disabled={false} className="bg-[#EC4F47] p-2 text-white rounded-md " type="submit" value="Login" />
                         </div>
                         <small>New here <Link className="text-base font-medium text-red-700/70" to={'/sign-up'}>Create an account</Link></small>
                     </form>

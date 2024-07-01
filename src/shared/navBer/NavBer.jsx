@@ -39,25 +39,25 @@ const NavBer = () => {
     </>
 
     return (
-       <div className="flex justify-center w-full bg-red-400/60">
+       <div className="flex justify-center w-full bg-[#EC4F47]">
          <div className="navbar z-10 text-black container mx-auto px-0 py-3">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-white">
                         {navLink}
                     </ul>
                 </div>
                 <Link to={'/'} className="text-2xl font-bold">
                     <div className="w-14">
-                        <img className="h-full w-full" src={logo} alt="" /> 
+                        <img className="h-full w-full bg-slate-100/70" src={logo} alt="" /> 
                     </div>
                     </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1 font-medium text-lg">
+                <ul className="menu menu-horizontal px-1 font-medium text-lg text-white/95">
                     {navLink}
                 </ul>
             </div>
@@ -88,12 +88,12 @@ const NavBer = () => {
                         <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-2">
                             <li className="p-2 "><Link to={userRole?.role == 'admin' || userRole?.role == 'volunteer' ?
                                      'dashboard/admin-home' : 'dashboard/user-home' }>dashboard</Link></li>
-                            <li><button className="p-2 bg-red-600/45" onClick={handleLogout}>Logout</button></li>
+                            <li><button className="p-2 bg-[#EC4F47]" onClick={handleLogout}>Logout</button></li>
                         </ul>
                       </div>
 
                         :
-                        <button className="p-2 bg-[#EC4F47] rounded-2xl text-base font-semibold"><Link to={'sign-in'}>Login</Link></button>
+                        <button className="p-2 bg-slate-100/70 border-[1px]  rounded-2xl text-base font-semibold"><Link to={'sign-in'}>Login</Link></button>
                 }
             </div>
         </div>

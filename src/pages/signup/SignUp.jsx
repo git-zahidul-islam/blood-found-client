@@ -195,7 +195,7 @@ const SignUp = () => {
 
                         </div>
                         <div className="flex justify-center mt-6">
-                            <button className="w-1/2 px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-[#FBAAAA] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Sign Up</button>
+                            <button className="w-1/2 px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-[#EC4F47] rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Sign Up</button>
                         </div>
                     </form>
                     <div className="divider"></div>
