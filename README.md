@@ -2,14 +2,6 @@
 
 Blood Found is a blood donation website where registered users can request blood and donate blood. It includes an admin dashboard with full admin functionality.
 
-## Table of Contents
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Features
 - User Authentication (Login/Signup)
 - Post Requests for Blood
@@ -77,14 +69,7 @@ Blood Found is a blood donation website where registered users can request blood
     nodemon index.js
     ```
 
-## Usage
-1. Open your browser and navigate to `http://localhost:3000` for the frontend.
-2. Register or login to your account.
-3. As a user, you can request blood and view donation opportunities.
-4. As an admin, you can access the admin dashboard to manage the platform. if you access messages 
-    [zahidulislam.here@gmail.com]
-
-# Live link: https://blood-found-513a1.web.app 
+### Live link : https://blood-found-513a1.web.app 
 
 ### Server github Repository
 #### link: https://github.com/git-zahidul-islam/blood-found-server
