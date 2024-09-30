@@ -4,16 +4,14 @@ import LastBloodDonar from "../../components/LastBloodDonar";
 import AboutProject from "../aboutProject/AboutProject";
 import ActionCall from "../actionCall/ActionCall";
 import Banner from "../banner/Banner";
-import Test from "../banner/Test";
 import ContactUs from "../contactUs/ContactUs";
 import Faq from "../faq/Faq";
 
 const Home = () => {
   return (
     <div className="md:space-y-24 space-y-12">
-      {/* <Banner></Banner> */}
       <div>
-        <Test />
+      <Banner></Banner>
       </div>
 
       {/* last blood donar */}
