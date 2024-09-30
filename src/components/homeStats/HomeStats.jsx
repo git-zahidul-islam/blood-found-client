@@ -1,62 +1,43 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
-
 const HomeStats = () => {
-    const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
 
-    const {data: total =[]} = useQuery({
-        queryKey: ['total'],
-        queryFn: async()=>{
-            const res = await axiosPublic.get('/public-stats')
-            return res.data;
-        }
-    })
+  const { data: total = [] } = useQuery({
+    queryKey: ["total"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/public-stats");
+      return res.data;
+    },
+  });
 
-    return (
-        <div>
-            <section className="px-6 py-12 my-6 bg-gradient-to-r from-stone-200 to-red-400 text-gray-800">
-	<div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4">
-		<div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-50 text-gray-800">
-			<div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-gradient-to-bl from-red-500 via-red-300 to-red-50 h-20 w-20">
-				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=81139&format=png&color=000000' alt="" />
-			</div>
-			<div className="flex flex-col justify-center align-middle">
-				<p className="text-3xl font-semibold leading-none">{total.user}</p>
-				<p className="capitalize">User</p>
-			</div>
-		</div>
-		<div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-50 text-gray-800">
-        <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-gradient-to-bl from-red-500 via-red-300 to-red-50 h-20 w-20">
-				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=52505&format=png&color=000000' alt="" />
-			</div>
-			<div className="flex flex-col justify-center align-middle">
-				<p className="text-3xl font-semibold leading-none">{total.blog}</p>
-				<p className="capitalize">Blog</p>
-			</div>
-		</div>
-		<div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-50 text-gray-800">
-        <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-gradient-to-bl from-red-500 via-red-300 to-red-50 h-20 w-20">
-				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=WCbYEPdsMFtZ&format=png&color=000000' alt="" />
-			</div>
-			<div className="flex flex-col justify-center align-middle">
-				<p className="text-3xl font-semibold leading-none">{total.pending}</p>
-				<p className="capitalize">Pending</p>
-			</div>
-		</div>
-		<div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-50 text-gray-800">
-        <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-gradient-to-bl from-red-500 via-red-300 to-red-50 h-20 w-20">
-				<img className="w-full h-full" src='https://img.icons8.com/?size=100&id=103813&format=png&color=000000' alt="" />
-			</div>
-			<div className="flex flex-col justify-center align-middle">
-				<p className="text-3xl font-semibold leading-none">{total.done}</p>
-				<p className="capitalize">Done</p>
-			</div>
-		</div>
-	</div>
-</section>
+  return (
+    <div className="relative bg-[#B32346] py-5">
+
+      <div className="container mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
+          {/* Users Stat */}
+          <div className="p-6">
+            <h3 className="text-2xl font-bold">Users</h3>
+            <p className="mt-2 text-xl">{total.user}</p>
+          </div>
+
+          {/* Blood Donated Stat */}
+          <div className="p-6">
+            <h3 className="text-2xl font-bold">Blood Donated</h3>
+            <p className="mt-2 text-xl">{total.done}</p>
+          </div>
+
+          {/* Pending Stat */}
+          <div className="p-6">
+            <h3 className="text-2xl font-bold">Pending</h3>
+            <p className="mt-2 text-xl">{total.pending}</p>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default HomeStats;
