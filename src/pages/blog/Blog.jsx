@@ -16,18 +16,25 @@ const Blog = () => {
   // console.log(blog);
 
   return (
-    <div className="max-w-7xl mx-auto my-8 min-h-[60vh]">
+    <section>
+    <div className="w-full md:h-32 h-12 bg-[#991747] flex justify-center items-center">
+        <h1 className="md:text-4xl text-2xl font-semibold text-white/80">The Blog Post</h1>
+      </div>
+
+    <div className="max-w-7xl mx-auto my-8 flex md:flex-row flex-col md:gap-5 gap-2 md:px-0 px-2">
       {blog.map((data) => (
-        <div key={data._id} className="bg-red-300/50 flex gap-5 p-4">
+        <div key={data._id} className="border-2 flex gap-5 p-4 md:my-4 my-0 md:w-[50%] w-full">
           <div className="w-44 h-40">
             <img className="w-full h-full" src={data?.image} alt="" />
           </div>
-          <div className="space-y-2">
-            <h1>{data?.title}</h1>
-            <p>{data?.description.slice(0, 150)}</p>
+          <div className="flex flex-col justify-between">
+            <div>
+              <h1>{data?.title}</h1>
+              <p>{data?.description.slice(0, 150)}</p>
+            </div>
             <div>
               <Link to={`/blog-details/${data._id}`}>
-                <button className="bg-red-600/50 rounded-xl p-2 text-white">
+                <button className="bg-[#991747] rounded-md p-2 text-white">
                   View Details
                 </button>
               </Link>
@@ -36,6 +43,7 @@ const Blog = () => {
         </div>
       ))}
     </div>
+    </section>
   );
 };
 

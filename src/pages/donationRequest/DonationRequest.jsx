@@ -16,8 +16,12 @@ const DonationRequest = () => {
   // console.log(pendingData);
 
   return (
-    <div className="my-8 space-y-10 min-h-[50vh]">
-      <SectionHeading heading={"All Donation Request"}></SectionHeading>
+    <section>
+    <div className="w-full md:h-32 h-12 bg-[#991747] flex justify-center items-center">
+    <SectionHeading heading={"All Donation Request"} color={'text-white'}></SectionHeading>
+    </div>
+
+    <div className="my-8 min-h-[50vh]">
       <div>
         <div className="max-w-7xl mx-auto"> 
           <div className="overflow-x-auto">
@@ -25,11 +29,11 @@ const DonationRequest = () => {
               {/* head */}
               <thead>
                 <tr>
-                  <th>Recipient name</th>
-                  <th>Location</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>
+                  <th className="text-base">Recipient name</th>
+                  <th className="text-base">Location</th>
+                  <th className="text-base">Date</th>
+                  <th className="text-base">Time</th>
+                  <th className="text-base">
                     view
                   </th>
                 </tr>
@@ -44,7 +48,7 @@ const DonationRequest = () => {
                         <td>{data.time}</td>
                         <th>
                             <Link to={`/donationDetails/${data._id}`}>
-                            <button  className="bg-green-600/35 p-2 rounded-xl">details</button>
+                            <button  className="bg-[#991747] p-2 rounded text-white/95 text-sm">details</button>
                             </Link>
                         </th>
                       </tr>)
@@ -55,6 +59,7 @@ const DonationRequest = () => {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 
