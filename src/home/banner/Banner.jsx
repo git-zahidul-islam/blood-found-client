@@ -35,12 +35,12 @@ const Test = () => {
           <div className="flex md:flex-row flex-col w-full text-white/95">
             <div className="md:w-[30%] w-full bg-[#ce3d61] md:px-16 px-8 md:py-4 py-2 space-y-4 md:flex hidden flex-col justify-center">
               <h1 className="md:text-3xl text-2xl font-bold leading-tight">
-                Reawaken your passion for collections
+              Connect with Life-Saving Blood Donors
               </h1>
-              <p className="text-lg">Explore a variety of unique cards on eBay.</p>
-              <button className="border-[1px] border-white/50 rounded-3xl px-[17px] py-[10px] text-base hover:bg-[#991747]">
+              <p className="text-lg">Easily find and offer blood donations.</p>
+              {/* <button className="border-[1px] border-white/50 rounded-3xl px-[17px] py-[10px] text-base hover:bg-[#991747]">
                 Shop Now
-              </button>
+              </button> */}
             </div>
             <div className="md:w-[70%] w-full md:h-[450px] h-[280px]">
               <img className="object-cover w-full h-full" src={img3} alt="slide images" />
@@ -51,12 +51,12 @@ const Test = () => {
           <div className="flex md:flex-row flex-col w-full text-white/95">
             <div className="hidden md:w-[30%] w-full bg-[#ce3d61] md:px-16 px-8 md:py-4 py-2 space-y-4 md:flex flex-col justify-center">
               <h1 className="md:text-3xl text-2xl font-bold leading-tight">
-                The right sneakers to pave your way
+              Your Blood Can Make a Difference
               </h1>
-              <p className="text-lg">Explore a variety of unique cards on eBay.</p>
-              <button className="border-[1px] border-white/50 rounded-3xl px-[17px] py-[10px] text-base hover:bg-[#991747]">
+              <p className="text-lg">Donate or find local blood donors today.</p>
+              {/* <button className="border-[1px] border-white/50 rounded-3xl px-[17px] py-[10px] text-base hover:bg-[#991747]">
                 Shop Now
-              </button>
+              </button> */}
             </div>
             <div className="md:w-[70%] w-full md:h-[450px] h-[280px]">
               <img className="object-cover w-full h-full" src={img3} alt="slide images" />
