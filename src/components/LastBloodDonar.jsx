@@ -13,7 +13,7 @@ const LastBloodDonar = () => {
     // Fetch donor details from backend
     const fetchDonorDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/get-blood-donor-emails');
+        const response = await axios.get('https://blood-found-server.vercel.app/get-blood-donor-emails');
         setDonors(response.data.donors);
       } catch (err) {
         setError('Failed to load donor details');
