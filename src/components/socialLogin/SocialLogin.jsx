@@ -1,59 +1,69 @@
-import { FaGoogle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
-
-
 const SocialLogin = () => {
-    const { googleLogin } = useAuth()
-    const navigate = useNavigate()
-    const axiosPublic = useAxiosPublic()
+  const { googleLogin } = useAuth();
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
-    const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = () => {
+    googleLogin().then((result) => {
+      // console.log("google login successfully", result.user);
+      const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName,
+        role: "donor",
+        status: "active",
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        // console.log("user added by google", res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Good job!",
+            text: "login successfully!",
+            icon: "success",
+          });
+        }
+        navigate("/");
+      });
+    });
+  };
 
-        googleLogin()
-            .then(result => {
-                // console.log("google login successfully", result.user);
-                const userInfo = {
-                    email: result.user?.email,
-                    name: result.user?.displayName,
-                    role: 'donor',
-                    status: 'active'
-                }
-                axiosPublic.post('/users', userInfo)
-                    .then(res => {
-                        // console.log("user added by google", res.data);
-                        if (res.data.insertedId) {
-                            Swal.fire({
-                                title: "Good job!",
-                                text: "login successfully!",
-                                icon: "success"
-                            });
-                        }
-                        navigate('/')
-                    })
-            })
-    }
-
-    return (
-        <div className="my-2 flex justify-center">
-            <button
-                onClick={handleGoogleSignIn}
-                className="p-2 flex items-center gap-2 border-2 rounded-md"
-                aria-label="Sign in with Google"
-            >
-                <svg className="w-6 h-6 mx-2" viewBox="0 0 40 40">
-                    <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#FFC107" />
-                    <path d="M5.25497 12.2425L10.7308 16.2583C12.2125 12.59 15.8008 9.99999 20 9.99999C22.5491 9.99999 24.8683 10.9617 26.6341 12.5325L31.3483 7.81833C28.3716 5.04416 24.39 3.33333 20 3.33333C13.5983 3.33333 8.04663 6.94749 5.25497 12.2425Z" fill="#FF3D00" />
-                    <path d="M20 36.6667C24.305 36.6667 28.2167 35.0192 31.1742 32.34L26.0159 27.975C24.3425 29.2425 22.2625 30 20 30C15.665 30 11.9842 27.2359 10.5975 23.3784L5.16254 27.5659C7.92087 32.9634 13.5225 36.6667 20 36.6667Z" fill="#4CAF50" />
-                    <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#1976D2" />
-                </svg>
-                <span className="mx-2">Sign in with Google</span>
-            </button>
-        </div>
-    );
+  return (
+    <button
+      onClick={handleGoogleSignIn}
+      className="p-2 border border-[#ce3d61]/60 rounded w-full flex gap-3 justify-center items-center"
+    >
+      Sign in with Google
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        x="0px"
+        y="0px"
+        width="22"
+        height="22"
+        viewBox="0 0 48 48"
+      >
+        <path
+          fill="#FFC107"
+          d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+        ></path>
+        <path
+          fill="#FF3D00"
+          d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+        ></path>
+        <path
+          fill="#4CAF50"
+          d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+        ></path>
+        <path
+          fill="#1976D2"
+          d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+        ></path>
+      </svg>
+    </button>
+  );
 };
 
 export default SocialLogin;
