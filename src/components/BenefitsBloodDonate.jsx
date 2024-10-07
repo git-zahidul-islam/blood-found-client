@@ -26,7 +26,7 @@ const BenefitsBloodDonate = () => {
           <div className="flex items-start gap-5">
             <div className="bg-[#991747] rounded-full">
               <p className="md:h-16 h-12 md:w-16 w-12 text-xl font-semibold flex items-center justify-center text-white">
-               <GiLifeBar size={25}/>
+                <GiLifeBar size={25}/>
               </p>
             </div>
             <div className="space-y-2">
